@@ -20,8 +20,8 @@ jobs:
         id: get_url
         run: |
           API_URL="https://api.github.com/repos/dns-khoindvn/top-country-stats/releases/latest"
-          DOWNLOAD_URL=$(curl -s $API_URL | grep browser_download_url | grep mobileconfig | cut -d '"' -f 4)
-          echo "url=$DOWNLOAD_URL" >> $GITHUB_OUTPUT
+          DOWNLOAD_URL=$(curl -s "$API_URL" | grep browser_download_url | grep mobileconfig | head -n 1 | sed 's/.*"browser_download_url": "\(.*\)".*/\1/')
+          printf 'url=%s\n' "$DOWNLOAD_URL" >> "$GITHUB_OUTPUT"
 
       - name: Download latest file
         run: |
