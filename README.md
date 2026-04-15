@@ -26,4 +26,6 @@ This profile is automatically synced with the latest release from:
 
 Original source:  
 https://khoindvn.io.vn/ 
-👉 Or [Buy certificates from them (iOS/tvOS)](https://muacert.com/)
+
+Or buy certificates (iOS/tvOS) from them: 
+👉 https://muacert.com/
