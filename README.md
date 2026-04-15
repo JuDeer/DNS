@@ -6,7 +6,7 @@ Easily install the latest DNS configuration profile on your iPhone.
 
 ## 📱 Install on iPhone
 
-👉 [**Install DNS Profile**](https://raw.githubusercontent.com/JuDeer/DNS/master/dns/khoindvn.io.vn.mobileconfig)
+👉 [**Dwonload DNS Profile**](https://raw.githubusercontent.com/JuDeer/DNS/master/dns/khoindvn.io.vn.mobileconfig)
 
 1. Tap the link above in Safari  
 2. Tap **Allow** when prompted  
@@ -26,5 +26,3 @@ This profile is automatically synced with the latest release from:
 
 Original source:  
 https://khoindvn.io.vn/Credit: https://khoindvn.io.vn/
-
- [Download DNS Profile (iOS)](https://raw.githubusercontent.com/JuDeer/DNS/master/dns/khoindvn.io.vn.mobileconfig)
