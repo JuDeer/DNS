@@ -25,4 +25,5 @@ This profile is automatically synced with the latest release from:
 ## 🙏 Credit
 
 Original source:  
-https://khoindvn.io.vn/Credit: https://khoindvn.io.vn/
+https://khoindvn.io.vn/ 
+👉 Or [Buy certificates from them (iOS/tvOS)](https://muacert.com/)
