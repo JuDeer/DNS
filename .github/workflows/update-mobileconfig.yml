@@ -16,15 +16,22 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Download file
+      - name: Get latest release asset URL
+        id: get_url
+        run: |
+          API_URL="https://api.github.com/repos/dns-khoindvn/top-country-stats/releases/latest"
+          DOWNLOAD_URL=$(curl -s $API_URL | grep browser_download_url | grep mobileconfig | cut -d '"' -f 4)
+          echo "url=$DOWNLOAD_URL" >> $GITHUB_OUTPUT
+
+      - name: Download latest file
         run: |
           mkdir -p dns
-          curl -L "https://github.com/dns-khoindvn/top-country-stats/releases/download/DNS/khoindvn.io.vn.mobileconfig" -o dns/khoindvn.io.vn.mobileconfig
+          curl -L "${{ steps.get_url.outputs.url }}" -o dns/khoindvn.io.vn.mobileconfig
 
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dns/khoindvn.io.vn.mobileconfig
-          git diff --cached --quiet || git commit -m "Update mobileconfig"
+          git commit -m "Update mobileconfig" || echo "No changes"
           git push
