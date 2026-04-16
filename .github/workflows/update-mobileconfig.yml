@@ -13,25 +13,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout DNS repo
         uses: actions/checkout@v4
 
-      - name: Get latest release asset URL
-        id: get_url
-        run: |
-          API_URL="https://api.github.com/repos/dns-khoindvn/top-country-stats/releases/latest"
-          DOWNLOAD_URL=$(curl -s "$API_URL" | grep browser_download_url | grep mobileconfig | head -n 1 | sed 's/.*"browser_download_url": "\(.*\)".*/\1/')
-          printf 'url=%s\n' "$DOWNLOAD_URL" >> "$GITHUB_OUTPUT"
-
-      - name: Download latest file
+      - name: Download latest release mobileconfig
         run: |
           mkdir -p dns
-          curl -L "${{ steps.get_url.outputs.url }}" -o dns/khoindvn.io.vn.mobileconfig
+          curl -s https://api.github.com/repos/dns-khoindvn/top-country-stats/releases/latest > release.json
+          URL=$(grep browser_download_url release.json | grep mobileconfig | head -n 1 | cut -d '"' -f 4)
+          curl -L "$URL" -o dns/khoindvn.io.vn.mobileconfig
 
-      - name: Commit if changed
+      - name: Commit changes in DNS repo if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dns/khoindvn.io.vn.mobileconfig
           git commit -m "Update mobileconfig" || echo "No changes"
+          git push
+
+      - name: Clone DNSInstaller repo
+        run: |
+          git clone https://x-access-token:${{ secrets.DNSINSTALLER_TOKEN }}@github.com/JuDeer/DNSInstaller.git installer
+
+      - name: Copy file to DNSInstaller
+        run: |
+          cp dns/khoindvn.io.vn.mobileconfig installer/public/dns.mobileconfig
+
+      - name: Commit changes in DNSInstaller if changed
+        run: |
+          cd installer
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/dns.mobileconfig
+          git commit -m "Sync latest dns.mobileconfig" || echo "No changes"
           git push
